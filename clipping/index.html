@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script src="vendor/d3.v6.min.js"></script>
+	<script src="vendor/jquery-3.5.1.min.js"></script>
+	<script src="vendor/gsap.min.js"></script>
+</head>
+
+<body>
+	<div id="clipping-pane">
+		<svg>
+			<rect mask="url(#mask)" width="100%" height="100%" fill="black"></rect>
+			<text y="100px" x="100px" style="fill:black">hello</text>
+
+			<filter id="blurMe">
+				<feGaussianBlur in="SourceGraphic" stdDeviation="10"/>
+			</filter>
+
+			<defs>
+				<mask id="mask">
+					<rect x="0" y="0" width="100%" height="100%" style="fill:#ffffff;opacity:0.5"/>
+					<circle cx="50%" cy="50%" r="20%" style="fill:#ffffff" filter="url(#blurMe)"/>
+			    </mask>
+			</defs>
+
+		</svg>
+	</div>
+
+	<script>
+		$(function() {
+			var data = {
+				el: '#blurMe > feGaussianBlur',
+				from: { attr: { stdDeviation: '10' } },
+				to: { attr: { stdDeviation: '0' }, duration: 10 }
+			}
+		    var tl = gsap.timeline();
+
+		    tl.fromTo(data.el, data.from, data.to);
+		});
+	</script>
+</body>
